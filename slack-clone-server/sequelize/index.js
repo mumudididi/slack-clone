@@ -11,30 +11,16 @@ import channelModel from "./models/channel.model";
 const sequelize = new Sequelize("slack-clone", "postgres", "postgres", {
   dialect: "postgres",
 });
-const modelDefiners = [
-  userModel,
-  teamModel,
-  channelModel,
-  messageModel,
-  // require("./models/team.model"),
-  // require("./models/channel.model"),
-  // require("./models/message.model"),
-  // require("./models/member.model"),
-  // Add more models here...
-  // require('./models/item'),
-];
-for (const definer of modelDefiners) {
-  definer(sequelize);
-}
-// We define all models according to their files.
-// for (const modelDefiner of modelDefiners) {
-//   // modelDefiner(sequelize);
-//   modelDefiner();
-//   console.log(modelDefiner);
-// }
-
+const models = {
+  User: userModel(sequelize),
+  Team: teamModel(sequelize),
+  Message: messageModel(sequelize),
+  Channel: channelModel(sequelize),
+};
 // We execute any extra setup after the models are defined, such as adding associations.
-applyExtraSetup(sequelize);
+applyExtraSetup(models);
+models.sequelize = sequelize;
+models.Sequelize = Sequelize;
 
 // We export the sequelize connection instance to be used around our app.
-export default sequelize;
+export default models;

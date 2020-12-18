@@ -1,32 +1,32 @@
-export function applyExtraSetup(sequelize) {
-  const { team, message, channel, user } = sequelize.models;
+export function applyExtraSetup(models) {
+  const { Team, Message, Channel, User } = models;
 
-  user.belongsToMany(team, {
+  User.belongsToMany(Team, {
     through: "member",
     foreignKey: "userId",
   });
 
   // Team
-  team.belongsToMany(user, {
+  Team.belongsToMany(User, {
     through: "member",
     foreignKey: "teamId",
   });
-  team.belongsTo(user, {
+  Team.belongsTo(User, {
     foreignKey: "owner",
   });
 
   // Message
 
-  message.belongsTo(channel, {
+  Message.belongsTo(Channel, {
     foreignKey: "channelId",
   });
-  message.belongsTo(user, {
+  Message.belongsTo(User, {
     foreignKey: "userId",
   });
 
   //Channel
 
-  channel.belongsTo(team, {
+  Channel.belongsTo(Team, {
     foreignKey: "teamId",
   });
 }

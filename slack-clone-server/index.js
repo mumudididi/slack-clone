@@ -1,31 +1,6 @@
-import express from "express";
-const { makeExecutableSchema, gql } = require("apollo-server");
-const { ApolloServer } = require("apollo-server-express");
-import sequelize from "./sequelize";
-
-const PORT = 8080;
-
-const app = express();
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello: () => "Hello world!",
-  },
-};
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
-
-const graphqlEndpt = "/graphql";
-const server = new ApolloServer({ schema });
-server.applyMiddleware({ app, path: graphqlEndpt });
-server.applyMiddleware({ app, path: "/graphiql" });
+import app from "./express/app";
+import models from "./sequelize";
+const sequelize = models.sequelize;
 
 async function assertDatabaseConnectionOk() {
   console.log(`Checking database connection...`);
