@@ -10,10 +10,10 @@ Dec 18, 2020
 
 ### Backend
 
-.._ Postgres
-.._ GraphQL
-..\* Apollo
+- Postgres
+- GraphQL
+- Apollo
 
 ### Frontend
 
-..\* React
+- React
