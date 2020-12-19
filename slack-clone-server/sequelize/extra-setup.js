@@ -6,6 +6,10 @@ export function applyExtraSetup(models) {
     foreignKey: "userId",
   });
 
+  User.belongsToMany(Channel, {
+    through: "channel_member",
+    foreignKey: "userId",
+  });
   // Team
   Team.belongsToMany(User, {
     through: "member",
@@ -28,5 +32,10 @@ export function applyExtraSetup(models) {
 
   Channel.belongsTo(Team, {
     foreignKey: "teamId",
+  });
+
+  Channel.belongsToMany(User, {
+    through: "channel_member",
+    foreignKey: "channelId",
   });
 }

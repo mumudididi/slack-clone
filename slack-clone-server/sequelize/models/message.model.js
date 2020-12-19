@@ -5,10 +5,10 @@ export default (sequelize) => {
     "message",
     {
       text: DataTypes.STRING,
-    },
-    {
-      underscored: true,
     }
+    // {
+    //   underscored: true,
+    // }
   );
   return Message;
 };

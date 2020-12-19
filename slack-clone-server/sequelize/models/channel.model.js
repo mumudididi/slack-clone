@@ -10,16 +10,11 @@ export default (sequelize) => {
       // since it is the default.
       name: DataTypes.STRING,
       public: DataTypes.BOOLEAN,
-    },
-    {
-      underscored: true,
     }
+    // {
+    //   underscored: true,
+    // }
   );
-  Channel.associate = (model) => {
-    Channel.belongsTo(model.Team, {
-      foreignKey: "teamId",
-    });
-  };
 
   return Channel;
 };

@@ -10,6 +10,9 @@ import channelModel from "./models/channel.model";
 // const sequelize = new Sequelize(process.env.DB_CONNECTION_URL);
 const sequelize = new Sequelize("slack-clone", "postgres", "postgres", {
   dialect: "postgres",
+  define: {
+    underscored: true,
+  },
 });
 const models = {
   User: userModel(sequelize),

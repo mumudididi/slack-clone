@@ -21,6 +21,7 @@ async function init() {
 
 init();
 
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync().then(() => {
+  // sequelize.sync({ force: true }).then(() => {
   app.listen(8081);
 });
