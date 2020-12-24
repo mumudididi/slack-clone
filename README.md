@@ -8,12 +8,20 @@ Dec 18, 2020
 
 ---
 
-### Backend
+#### Backend
 
-- Postgres
-- GraphQL
-- Apollo
+- Postgres (database)
+- GraphQL (MiddleWare)
+- Apollo (server)
 
-### Frontend
+#### Frontend
 
 - React
+
+---
+
+### side note
+
+The Original Project was built in 2017. Since then Slack has been changing so as all the technologies used. In my fork, the following has been incorporated:
+
+- Apollo server migration from 1.0 -> 3.0. Adapted with _sequalize_ library and React.
