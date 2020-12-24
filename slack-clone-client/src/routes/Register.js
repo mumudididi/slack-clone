@@ -1,6 +1,14 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
-import { Button, Container, Header, Input } from "semantic-ui-react";
+import {
+  Message,
+  Button,
+  Container,
+  Header,
+  Input,
+  FormInput,
+} from "semantic-ui-react";
 
 const Register = () => {
   const [userInput, setUserInput] = useState({
@@ -8,6 +16,15 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const [formStatus, setFormStatus] = useState({
+    usernameError: "",
+    emailError: "",
+    passwordError: "",
+  });
+
+  const history = useHistory();
+
+  // structure of data : { register: {ok: false, errors: [(),()...]}}
   const [register, { data, loading, error }] = useMutation(registerMutation);
 
   const onChange = (e) => {
@@ -20,20 +37,47 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const { username, password, email } = userInput;
-    await register({
+    const response = await register({
       variables: { username, password, email },
       ignoreResults: false,
     });
+    const { ok, errors } = response.data.register;
+    if (ok) {
+      history.push("/");
+    } else {
+      const err = {};
+      console.log(errors);
+      errors.forEach(({ path, message }) => {
+        err[`${path}Error`] = message;
+      });
+      console.log(err);
+      setFormStatus(err);
+    }
+    setUserInput({
+      username: "",
+      email: "",
+      password: "",
+    });
   };
+  // const errList = () => {
+  //   const err = [];
+  //   console.log("here");
+  //   for (const msg in formStatus) {
+  //     if (msg) {
+  //       console.log("on submit");
+  //       console.log(msg);
+  //       err.push(msg);
+  //     }
+  //   }
+  //   return err;
+  // };
 
   return (
     <Container text>
       <Header as="h2">Register</Header>
-      {error ? <h3>an error has occur during registration</h3> : null}
-      {data && data.register === false ? (
-        <h3>User not created, please try again</h3>
-      ) : null}
+      {error ? <h3>an unkown error has occur during registration</h3> : null}
       <Input
+        error={!!formStatus.usernameError}
         name="username"
         onChange={onChange}
         value={userInput.username}
@@ -41,6 +85,7 @@ const Register = () => {
         fluid
       />
       <Input
+        error={!!formStatus.emailError}
         name="email"
         onChange={onChange}
         value={userInput.email}
@@ -48,6 +93,7 @@ const Register = () => {
         fluid
       />
       <Input
+        error={!!formStatus.passwordError}
         name="password"
         onChange={onChange}
         value={userInput.password}
@@ -55,13 +101,28 @@ const Register = () => {
         fluid
       />
       <Button onClick={onSubmit}>{loading ? "Loading" : "Register!"}</Button>
+      {formStatus.usernameError ||
+      formStatus.passwordError ||
+      formStatus.emailError ? (
+        <Message
+          error
+          header="There is something wrong with your registration"
+          list={Object.values(formStatus)}
+        />
+      ) : null}
     </Container>
   );
 };
 
 const registerMutation = gql`
   mutation($username: String!, $email: String!, $password: String!) {
-    register(username: $username, password: $password, email: $email)
+    register(username: $username, password: $password, email: $email) {
+      ok
+      errors {
+        path
+        message
+      }
+    }
   }
 `;
 

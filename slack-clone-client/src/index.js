@@ -12,7 +12,7 @@ import "semantic-ui-css/semantic.min.css";
 import reportWebVitals from "./reportWebVitals";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:8081/graphql",
+  uri: "http://localhost:8081/graphiql",
 });
 const client = new ApolloClient({
   link: httpLink,
