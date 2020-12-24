@@ -4,7 +4,9 @@ import { ApolloServer } from "apollo-server-express";
 import { types as typeDefs } from "./typeDefs";
 import resolvers from "./resolvers";
 import models from "../sequelize";
+import cors from "cors";
 const app = express();
+app.use(cors("*"));
 
 const schema = makeExecutableSchema({
   typeDefs,
