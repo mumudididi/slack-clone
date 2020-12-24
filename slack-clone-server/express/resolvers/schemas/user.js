@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 export default {
   Query: {
     getUser: (parent, { id }, { models }) =>
@@ -6,6 +7,15 @@ export default {
   },
   Mutation: {
     //context :store data base (sequelize) connection
-    createUser: (parent, args, { models }) => models.User.create(args),
+    register: async (parent, { password, ...otherArguments }, { models }) => {
+      try {
+        const hasedpsword = await bcrypt.hash(password, 12);
+        await models.User.create({ ...otherArguments, password: hasedpsword });
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
   },
 };

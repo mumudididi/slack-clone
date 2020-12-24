@@ -7,7 +7,10 @@ import {
   ApolloProvider,
   createHttpLink,
 } from "@apollo/client";
+import "semantic-ui-css/semantic.min.css";
+
 import reportWebVitals from "./reportWebVitals";
+
 const httpLink = createHttpLink({
   uri: "http://localhost:8081/graphql",
 });
