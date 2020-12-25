@@ -29,12 +29,6 @@ export default (sequelize) => {
     },
     password: {
       type: DataTypes.STRING,
-      // validate: {
-      //   len: {
-      //     args: [8, 32],
-      //     msg: "password needs to have at least 8, at most 32 characters",
-      //   },
-      // },
     },
   });
   return User;
