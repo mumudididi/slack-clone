@@ -17,12 +17,20 @@ export default gql`
     user: User
     errors: [Error!]
   }
+  type loginResponse {
+    ok: Boolean!
+    token: String
+    refreshToken: String
+    errors: [Error!]
+  }
   type Mutation {
     register(
       username: String!
       password: String!
       email: String!
     ): registerResponse!
+
+    login(email: String!, password: String!): loginResponse!
   }
   type Query {
     getUser(id: Int!): User!

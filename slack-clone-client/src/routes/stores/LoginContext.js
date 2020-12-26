@@ -12,11 +12,17 @@ export class LoginStore extends Component {
     extendObservable(this, {
       email: "",
       password: "",
+      emailError: "",
+      passwordError: "",
     });
   }
 
-  setUser = action((field, value) => {
+  setField = action((field, value) => {
     this[field] = value;
+  });
+  clearErrors = action(() => {
+    this.passwordError = "";
+    this.emailError = "";
   });
 }
 

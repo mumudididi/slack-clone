@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
-import {
-  Message,
-  Button,
-  Container,
-  Header,
-  Input,
-  FormInput,
-} from "semantic-ui-react";
+import { Message, Button, Container, Header, Input } from "semantic-ui-react";
 
 const Register = () => {
   const [userInput, setUserInput] = useState({
@@ -46,11 +39,9 @@ const Register = () => {
       history.push("/");
     } else {
       const err = {};
-      console.log(errors);
       errors.forEach(({ path, message }) => {
         err[`${path}Error`] = message;
       });
-      console.log(err);
       setFormStatus(err);
     }
     setUserInput({
@@ -59,18 +50,6 @@ const Register = () => {
       password: "",
     });
   };
-  // const errList = () => {
-  //   const err = [];
-  //   console.log("here");
-  //   for (const msg in formStatus) {
-  //     if (msg) {
-  //       console.log("on submit");
-  //       console.log(msg);
-  //       err.push(msg);
-  //     }
-  //   }
-  //   return err;
-  // };
 
   return (
     <Container text>

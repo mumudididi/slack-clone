@@ -8,6 +8,8 @@ import cors from "cors";
 const app = express();
 app.use(cors("*"));
 
+const SECRET = "lafoweodfepqicuewu";
+const SECRET2 = "kldsfkamdnvalsjflgtwwq";
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
@@ -21,6 +23,8 @@ const server = new ApolloServer({
     user: {
       id: 1,
     },
+    SECRET,
+    SECRET2,
   },
 });
 server.applyMiddleware({ app, path: graphqlEndpt });
