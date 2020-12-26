@@ -17,24 +17,9 @@ export default {
   Mutation: {
     //context :store data base (sequelize) connection
     // register mutation
-    register: async (parent, { password, ...otherArguments }, { models }) => {
-      if (password.length < 5 || password.length > 32) {
-        return {
-          ok: false,
-          errors: [
-            {
-              path: "password",
-              message: "the password should have length between 8 and 32",
-            },
-          ],
-        };
-      }
+    register: async (parent, args, { models }) => {
       try {
-        const hasedpsword = await bcrypt.hash(password, 12);
-        const user = await models.User.create({
-          ...otherArguments,
-          password: hasedpsword,
-        });
+        const user = await models.User.create(args);
         return {
           ok: true,
           user: user,
