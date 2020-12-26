@@ -1,18 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import ReactDOM from "react-dom";
 import { observer } from "mobx-react";
-import LoginContext from "./stores/LoginContext";
+import { LoginStore } from "./stores/LoginContext";
+// import LoginContext, { LoginStore } from "./stores/LoginContext";
 import { Message, Button, Container, Header, Input } from "semantic-ui-react";
 
 const Login = observer(() => {
-  const LoginStore = useContext(LoginContext);
+  //   const LoginStore = useContext(LoginContext);
+  const [loginStore] = useState(new LoginStore());
   const onChange = (e) => {
     const { name, value } = e.target;
-    LoginStore.setUser(name, value);
+    loginStore.setUser(name, value);
   };
   const onSubmit = (e) => {
-    console.log(LoginStore.email);
-    console.log(LoginStore.password);
+    console.log(loginStore.email);
+    console.log(loginStore.password);
   };
 
   return (
