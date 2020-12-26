@@ -3,7 +3,14 @@ import { observer } from "mobx-react";
 import { LoginStore } from "./stores/LoginContext";
 import { useHistory } from "react-router-dom";
 // import LoginContext, { LoginStore } from "./stores/LoginContext";
-import { Message, Button, Container, Header, Input } from "semantic-ui-react";
+import {
+  Message,
+  Button,
+  Container,
+  Header,
+  Input,
+  Form,
+} from "semantic-ui-react";
 import { gql, useMutation } from "@apollo/client";
 
 const Login = observer(() => {
@@ -56,24 +63,48 @@ const Login = observer(() => {
   return (
     <Container text>
       <Header as="h2">Login</Header>
-      <Input
-        error={!!loginStore.emailError}
-        name="email"
-        onChange={onChange}
-        value={LoginStore.email}
-        placeholder="Email"
-        fluid
-      />
-      <Input
-        error={!!loginStore.passwordError}
-        name="password"
-        onChange={onChange}
-        value={LoginStore.password}
-        placeholder="Password"
-        fluid
-      />
+      <Form>
+        <Form.Field
+          control={Input}
+          error={!!loginStore.emailError}
+          name="email"
+          onChange={onChange}
+          value={LoginStore.email}
+          placeholder="Email"
+          fluid
+        />
+        <Form.Field
+          control={Input}
+          error={!!loginStore.passwordError}
+          name="password"
+          onChange={onChange}
+          value={LoginStore.password}
+          placeholder="Password"
+          fluid
+        />
+      </Form>
       <Button onClick={onSubmit}>{loading ? "Loading" : "Log in"}</Button>
       <Button onClick={getLocalStorage}>print localStorage</Button>
+
+      {loginStore.emailError || loginStore.passwordError ? (
+        <Message
+          error
+          header="There is something wrong with your registration"
+          list={() => {
+            const errs = [];
+            if (loginStore.emailError && loginStore.emailError.length !== 0) {
+              errs.push(loginStore.emailError);
+            }
+            if (
+              loginStore.passwordError &&
+              loginStore.passwordError.length !== 0
+            ) {
+              errs.push(loginStore.passwordError);
+            }
+            return errs;
+          }}
+        />
+      ) : null}
     </Container>
   );
 });

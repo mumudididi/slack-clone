@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
-import { Message, Button, Container, Header, Input } from "semantic-ui-react";
+import {
+  Form,
+  Message,
+  Button,
+  Container,
+  Header,
+  Input,
+} from "semantic-ui-react";
 
 const Register = () => {
   const [userInput, setUserInput] = useState({
@@ -55,31 +62,49 @@ const Register = () => {
     <Container text>
       <Header as="h2">Register</Header>
       {error ? <h3>an unkown error has occur during registration</h3> : null}
-      <Input
-        error={!!formStatus.usernameError}
-        name="username"
-        onChange={onChange}
-        value={userInput.username}
-        placeholder="Username"
-        fluid
-      />
-      <Input
-        error={!!formStatus.emailError}
-        name="email"
-        onChange={onChange}
-        value={userInput.email}
-        placeholder="Email"
-        fluid
-      />
-      <Input
-        error={!!formStatus.passwordError}
-        name="password"
-        onChange={onChange}
-        value={userInput.password}
-        placeholder="Password"
-        fluid
-      />
-      <Button onClick={onSubmit}>{loading ? "Loading" : "Register!"}</Button>
+      <Form>
+        <Form.Field
+          control={Input}
+          name="username"
+          value={userInput.username}
+          placeholder="Username"
+          error={!!formStatus.usernameError}
+          onChange={onChange}
+          fluid
+        />
+        {/* <Input
+            error={!!formStatus.usernameError}
+            name="username"
+            onChange={onChange}
+            value={userInput.username}
+            placeholder="Username"
+            fluid
+          /> */}
+        <Form.Field
+          control={Input}
+          error={!!formStatus.emailError}
+          name="email"
+          onChange={onChange}
+          value={userInput.email}
+          placeholder="Email"
+          fluid
+        />
+        <Form.Field
+          control={Input}
+          error={!!formStatus.passwordError}
+          name="password"
+          onChange={onChange}
+          value={userInput.password}
+          placeholder="Password"
+          fluid
+        />
+        <Form.Field>
+          <Button onClick={onSubmit}>
+            {loading ? "Loading" : "Register!"}
+          </Button>
+        </Form.Field>
+      </Form>
+
       {formStatus.usernameError ||
       formStatus.passwordError ||
       formStatus.emailError ? (
