@@ -19,7 +19,7 @@ const Login = observer(() => {
 
   const history = useHistory();
   // structure of data : { register: {ok: false, errors: [(),()...]}}
-  const [login, { data, loading, error }] = useMutation(loginMutation);
+  const [login, { loading }] = useMutation(loginMutation);
 
   const onChange = (e) => {
     const { name, value } = e.target;

@@ -25,7 +25,8 @@ const Register = () => {
   const history = useHistory();
 
   // structure of data : { register: {ok: false, errors: [(),()...]}}
-  const [register, { data, loading, error }] = useMutation(registerMutation);
+  // const [register, { data, loading, error }] = useMutation(registerMutation);
+  const [register, { loading, error }] = useMutation(registerMutation);
 
   const onChange = (e) => {
     const { name, value } = e.target;
