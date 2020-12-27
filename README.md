@@ -39,3 +39,4 @@ In this session I would want to keep useful resources(other than docs and sorce 
   1. How express app worked with apollo server: https://www.youtube.com/watch?v=camfkdmuR8M
   2. Top level Error handling with Apollo server: https://www.youtube.com/watch?v=dr9I4xPYkdw
   3. How to access header in onError link: https://stackoverflow.com/questions/56086996/how-to-set-token-into-onerror-apolloclient
+  4. Apollo Server concat links, order matters: https://stackoverflow.com/questions/51840201/apollo-you-are-calling-concat-on-a-terminating-link-which-will-have-no-effect
