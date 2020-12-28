@@ -5,6 +5,7 @@ import Register from "./Register";
 // import LoginContext, { LoginStore } from "./stores/LoginContext";
 import Login from "./Login";
 import CreateTeam from "./CreateTeam";
+import ViewTeam from "./ViewTeam";
 
 export default () => (
   // <LoginContext.Provider value={new LoginStore()}>
@@ -14,6 +15,7 @@ export default () => (
       <Route path="/register" exact component={Register} />
       <Route path="/login" exact component={Login} />
       <Route path="/create-team" exact component={CreateTeam} />
+      <Route path="/view-team" exact component={ViewTeam} />
     </Switch>
   </Router>
   // </LoginContext.Provider>

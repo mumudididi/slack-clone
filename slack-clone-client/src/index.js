@@ -50,18 +50,21 @@ const authLink = new ApolloLink((operation, forward) => {
 //   };
 // });
 
-const errorLink = onError(({ operation, graphQLErrors, networkError }) => {
-  const headers = operation.getContext().headers;
-  console.log(headers);
-  const token = headers["xtoken"];
-  const refreshToken = headers["xrefreshToken"];
-  if (token) {
-    localStorage.setItem("token", token);
+const errorLink = onError(
+  ({ graphQLErrors, networkError, operation, forward }) => {
+    const { headers } = operation.getContext();
+    const token = headers["xtoken"];
+    const refreshToken = headers["xrefreshToken"];
+    if (token) {
+      localStorage.setItem("token", token);
+    }
+    if (refreshToken) {
+      localStorage.setItem("refreshToken", refreshToken);
+    }
+
+    return forward(operation);
   }
-  if (refreshToken) {
-    localStorage.setItem("refreshToken", refreshToken);
-  }
-});
+);
 
 const client = new ApolloClient({
   link: from([errorLink, authLink, httpLink]),
