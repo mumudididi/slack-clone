@@ -24,8 +24,6 @@ const authLink = new ApolloLink((operation, forward) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
-  console.log(" in authLink");
-  console.log(operation.getContext().headers);
   operation.setContext({
     headers: {
       ...operation.headers,
@@ -42,8 +40,6 @@ const authLink = new ApolloLink((operation, forward) => {
 //   const token = localStorage.getItem("token");
 //   const refreshToken = localStorage.getItem("refreshToken");
 //   // return the headers to the context so httpLink can read them
-//   console.log(" in auth link set context");
-//   console.log(headers);
 //   return {
 //     headers: {
 //       ...headers,
@@ -54,11 +50,11 @@ const authLink = new ApolloLink((operation, forward) => {
 //   };
 // });
 
-const errorLink = onError(({ operation }) => {
+const errorLink = onError(({ operation, graphQLErrors, networkError }) => {
   const headers = operation.getContext().headers;
   console.log(headers);
-  const token = headers["Xtoken"];
-  const refreshToken = headers["XrefreshToken"];
+  const token = headers["xtoken"];
+  const refreshToken = headers["xrefreshToken"];
   if (token) {
     localStorage.setItem("token", token);
   }

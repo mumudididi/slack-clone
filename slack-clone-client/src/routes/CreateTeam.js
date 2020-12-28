@@ -35,10 +35,18 @@ const CreateTeam = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const { name } = team;
-    const response = await createTeam({
-      variables: { name },
-      ignoreResults: false,
-    });
+    let response = null;
+    try {
+      response = await createTeam({
+        variables: { name },
+        ignoreResults: false,
+      });
+    } catch (error) {
+      console.log("in erorr redirection");
+      console.log(error);
+      history.push("/login");
+      return;
+    }
     const { ok, errors } = response.data.createTeam;
     if (ok) {
       history.push("/");

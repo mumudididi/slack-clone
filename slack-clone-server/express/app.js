@@ -16,11 +16,8 @@ const addUser = async (req, res, next) => {
   if (token) {
     try {
       const { user } = jwt.verify(token, SECRET);
-      console.log("found user");
-      console.log(user.id);
       req.user = user;
     } catch (e) {
-      console.log(" usernot veryfied");
       const refreshToken = req.headers.xrefreshToken;
       const newTokens = await refreshTokens(
         refreshToken,
@@ -36,9 +33,6 @@ const addUser = async (req, res, next) => {
       req.user = newTokens.user;
     }
   }
-  console.log("end of addUser");
-  console.log(req.headers);
-  console.log("tokenprinted");
   next();
 };
 
@@ -53,7 +47,6 @@ const graphqlEndpt = "/graphql";
 const server = new ApolloServer({
   schema,
   context: ({ req }) => {
-    console.log(req.user);
     return {
       models,
       user: req.user,
