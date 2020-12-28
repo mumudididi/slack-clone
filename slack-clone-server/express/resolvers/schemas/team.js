@@ -21,4 +21,14 @@ export default {
       }
     ),
   },
+  Query: {
+    allTeams: requiresAuth.createResolver(
+      async (parent, args, { models, user }) =>
+        await models.Team.findAll({ where: { owner: user.id } }, { raw: true })
+    ),
+  },
+  Team: {
+    channels: (parent, args, { models }) =>
+      models.Channel.findAll({ where: { teamId: parent.id } }),
+  },
 };
