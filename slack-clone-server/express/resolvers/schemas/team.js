@@ -1,15 +1,19 @@
 import formatErrors from "../utils/formatErrors";
 import { requiresAuth } from "../utils/permission";
-console.log("imported permission");
 export default {
   Mutation: {
     createTeam: requiresAuth.createResolver(
       async (parent, args, { models, user }) => {
-        console.log("resolving mutation");
         try {
-          await models.Team.create({ ...args, owner: user.id });
+          const team = await models.Team.create({ ...args, owner: user.id });
+          await models.Channel.create({
+            name: "general",
+            public: true,
+            teamId: team.id,
+          });
           return {
             ok: true,
+            team,
           };
         } catch (err) {
           console.log(err);

@@ -9,7 +9,10 @@ export default (sequelize) => {
       // The following specification of the 'id' attribute could be omitted
       // since it is the default.
       name: DataTypes.STRING,
-      public: DataTypes.BOOLEAN,
+      public: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
     }
     // {
     //   underscored: true,

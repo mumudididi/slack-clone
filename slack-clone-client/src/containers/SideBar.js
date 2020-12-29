@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-import _ from "lodash";
+import findIndex from "lodash/findIndex";
 import Channels from "../component/Channels";
 import Teams from "../component/Teams";
 import decode from "jwt-decode";
@@ -17,15 +17,15 @@ export default ({ currentTeamId }) => {
   } catch (err) {
     console.log(err);
   }
-  console.log(username);
 
   // get teams
   const { allTeams } = data;
-  console.log(allTeams);
-  const teamIdx = _.findIndex(allTeams, ["id", currentTeamId]);
-  console.log(teamIdx);
+  const teamIdx = currentTeamId
+    ? findIndex(allTeams, ["id", parseInt(currentTeamId, 10)])
+    : 0;
   const team = allTeams[teamIdx];
   console.log(team);
+  console.log(data);
   return (
     <React.Fragment>
       <Teams

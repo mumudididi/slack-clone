@@ -48,8 +48,10 @@ const CreateTeam = () => {
       return;
     }
     const { ok, errors } = response.data.createTeam;
+    const res_team = response.data.createTeam.team;
+    console.log(response.data);
     if (ok) {
-      history.push("/");
+      history.push(`/view-team/${res_team.id}`);
     } else {
       const err = {};
       errors.forEach(({ path, message }) => {
@@ -98,6 +100,9 @@ const createTeamMutation = gql`
       errors {
         path
         message
+      }
+      team {
+        id
       }
     }
   }

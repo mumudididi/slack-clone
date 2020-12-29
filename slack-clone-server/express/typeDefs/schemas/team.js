@@ -15,6 +15,7 @@ export default gql`
   type createTeamResponse {
     ok: Boolean!
     errors: [Error!]
+    team: Team
   }
   type Mutation {
     createTeam(name: String!): createTeamResponse!

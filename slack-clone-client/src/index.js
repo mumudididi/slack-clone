@@ -26,7 +26,6 @@ const authLink = new ApolloLink((operation, forward) => {
   const refreshToken = localStorage.getItem("refreshToken");
   operation.setContext({
     headers: {
-      ...operation.headers,
       authorization: token ? `Bearer ${token}` : "",
       xtoken: token,
       xrefreshToken: refreshToken,
@@ -50,21 +49,21 @@ const authLink = new ApolloLink((operation, forward) => {
 //   };
 // });
 
-const errorLink = onError(
-  ({ graphQLErrors, networkError, operation, forward }) => {
-    const { headers } = operation.getContext();
-    const token = headers["xtoken"];
-    const refreshToken = headers["xrefreshToken"];
+const errorLink = onError(({ operation, forward }) => {
+  const { headers } = operation.getContext();
+  const token = headers["xtoken"];
+  const refreshToken = headers["xrefreshToken"];
+  if (headers) {
     if (token) {
       localStorage.setItem("token", token);
     }
     if (refreshToken) {
       localStorage.setItem("refreshToken", refreshToken);
     }
-
-    return forward(operation);
   }
-);
+
+  return forward(operation);
+});
 
 const client = new ApolloClient({
   link: from([errorLink, authLink, httpLink]),
