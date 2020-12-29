@@ -4,8 +4,13 @@ import findIndex from "lodash/findIndex";
 import Channels from "../component/Channels";
 import Teams from "../component/Teams";
 import decode from "jwt-decode";
+import ConnectedAddChannelModal from "../component/ConnectedAddChannelModal";
 
 export default ({ currentTeamId }) => {
+  const [openAddChannelModal, setOpenAddChannelModal] = useState(false);
+  const toggleModalOpen = () => {
+    setOpenAddChannelModal(!openAddChannelModal);
+  };
   const { loading, error, data } = useQuery(allTeamsQuery);
   if (loading) return null;
   //get user
@@ -24,8 +29,6 @@ export default ({ currentTeamId }) => {
     ? findIndex(allTeams, ["id", parseInt(currentTeamId, 10)])
     : 0;
   const team = allTeams[teamIdx];
-  console.log(team);
-  console.log(data);
   return (
     <React.Fragment>
       <Teams
@@ -44,9 +47,15 @@ export default ({ currentTeamId }) => {
           { id: 1, name: "slackbot" },
           { id: 2, name: "user1" },
         ]}
+        onClickAddChannel={toggleModalOpen}
       >
         Channels
       </Channels>
+      <ConnectedAddChannelModal
+        teamId={currentTeamId}
+        open={openAddChannelModal}
+        handleClose={toggleModalOpen}
+      />
     </React.Fragment>
   );
 };

@@ -49,7 +49,6 @@ const CreateTeam = () => {
     }
     const { ok, errors } = response.data.createTeam;
     const res_team = response.data.createTeam.team;
-    console.log(response.data);
     if (ok) {
       history.push(`/view-team/${res_team.id}`);
     } else {

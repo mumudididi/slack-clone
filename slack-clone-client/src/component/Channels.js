@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-
+import { Icon } from "semantic-ui-react";
+// Dec28 2020
+//Bug: after adding channels, it does not auto refresh
+//Bug: landing on /view-team/?team-id should always have a team id, currently it doesn't
+// Bug: Channel name should be Unique for each team.
 const ChannelWrapper = styled.div`
   grid-column: 2;
   grid-row: 1 / 4;
@@ -53,7 +57,13 @@ const user = ({ id, name }) => (
   </SideBarListItem>
 );
 
-export default ({ teamName, username, channels, users }) => (
+export default ({
+  teamName,
+  username,
+  channels,
+  users,
+  onClickAddChannel = () => {},
+}) => (
   <ChannelWrapper>
     <PushLeft>
       <TeamNameHeader>{teamName}</TeamNameHeader>
@@ -61,7 +71,9 @@ export default ({ teamName, username, channels, users }) => (
     </PushLeft>
     <div>
       <SideBarList>
-        <SideBarListHeader>Channels</SideBarListHeader>
+        <SideBarListHeader>
+          Channels <Icon name="add circle" onClick={onClickAddChannel} />
+        </SideBarListHeader>
         {channels.map(channel)}
       </SideBarList>
     </div>
@@ -73,3 +85,5 @@ export default ({ teamName, username, channels, users }) => (
     </div>
   </ChannelWrapper>
 );
+
+// Formik with useMutaion and react hooks https://codesandbox.io/s/awesome-ishizaka-kuhxi
