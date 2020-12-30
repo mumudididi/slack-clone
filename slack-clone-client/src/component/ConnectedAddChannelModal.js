@@ -59,6 +59,18 @@ const FormikModalWrapper = withFormik({
       const response = await createChannel({
         variables: { teamId: parseInt(teamId, 10), name: name },
         refetchQueries: [{ query: allTeamsQuery }],
+        optimisticResponse: {
+          createChannel: {
+            __typename: "Mutation",
+            ok: true,
+            channel: {
+              __typename: "Channel",
+              id: -1,
+              name: name,
+              teamId,
+            },
+          },
+        },
       });
       console.log(response);
     } catch (err) {
