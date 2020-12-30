@@ -2,7 +2,10 @@ import React from "react";
 import { Modal, Button, Input, Form } from "semantic-ui-react";
 import { withFormik } from "formik";
 import { gql, useMutation } from "@apollo/client";
+import { allTeamsQuery } from "../utils/sharedQueries";
+import findIndex from "lodash/findIndex";
 
+//https://hasura.io/learn/graphql/react/mutations-variables/3-create-mutation/
 const AddChannelModal = (props) => {
   const {
     open,
@@ -55,6 +58,7 @@ const FormikModalWrapper = withFormik({
     try {
       const response = await createChannel({
         variables: { teamId: parseInt(teamId, 10), name: name },
+        refetchQueries: [{ query: allTeamsQuery }],
       });
       console.log(response);
     } catch (err) {
@@ -67,9 +71,29 @@ const FormikModalWrapper = withFormik({
 
 const createChannelMutation = gql`
   mutation($teamId: Int!, $name: String!) {
-    createChannel(teamId: $teamId, name: $name)
+    createChannel(teamId: $teamId, name: $name) {
+      ok
+      channel {
+        id
+        name
+        teamId
+      }
+    }
   }
 `;
+// const updateCahche = (cache, { data: { createChannel } }) => {
+//   // console.log(data);
+//   // console.log(cache);
+//   const { ok, channel } = createChannel;
+//   if (!ok) return;
+//   const data = cache.readQuery({ query: allTeamsQuery });
+//   const teamIdx = findIndex(data.allTeams, ["id", channel.teamId]);
+//   console.log(data.allTeams[teamIdx]);
+//   const channels = data.allTeams[teamIdx].channels;
+//   data.allTeams[teamIdx].channels = [...channels, channel];
+//   // cache.writeQuery({ query: allTeamsQuery, data });
+// };
+
 const ConnectedAddChannelModal = (props) => {
   const [createChannel] = useMutation(createChannelMutation);
   return <FormikModalWrapper {...props} createChannel={createChannel} />;

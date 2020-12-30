@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import findIndex from "lodash/findIndex";
 import Channels from "../component/Channels";
 import Teams from "../component/Teams";
 import decode from "jwt-decode";
 import ConnectedAddChannelModal from "../component/ConnectedAddChannelModal";
+import { allTeamsQuery } from "../utils/sharedQueries";
 
 export default ({ currentTeamId }) => {
   const [openAddChannelModal, setOpenAddChannelModal] = useState(false);
@@ -52,23 +53,10 @@ export default ({ currentTeamId }) => {
         Channels
       </Channels>
       <ConnectedAddChannelModal
-        teamId={currentTeamId}
+        teamId={team.id}
         open={openAddChannelModal}
         handleClose={toggleModalOpen}
       />
     </React.Fragment>
   );
 };
-
-const allTeamsQuery = gql`
-  {
-    allTeams {
-      id
-      name
-      channels {
-        id
-        name
-      }
-    }
-  }
-`;

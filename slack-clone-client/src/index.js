@@ -71,6 +71,7 @@ const client = new ApolloClient({
   // link: from([authLink, httpLink]),
   // link: from([httpLink]),
   cache: new InMemoryCache(),
+  connectToDevTools: true,
 });
 
 const App = (

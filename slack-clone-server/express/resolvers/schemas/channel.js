@@ -1,14 +1,19 @@
+import formatErrors from "../utils/formatErrors";
 export default {
   Mutation: {
     createChannel: async (parent, args, { models }) => {
-      console.log("in mutation");
-      console.log(args);
       try {
-        await models.Channel.create(args);
-        return true;
+        const channel = await models.Channel.create(args);
+        return {
+          ok: true,
+          channel: channel,
+        };
       } catch (err) {
         console.log(err);
-        return false;
+        return {
+          ok: false,
+          errors: formatErrors(err),
+        };
       }
     },
   },
