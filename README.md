@@ -36,11 +36,18 @@ In this session I would want to keep useful resources(other than docs and sorce 
   1. How to setup mobx with React useContext: https://codingislove.com/setup-mobx-react-context/
 
 - Dec 26, 2020
+
   1. How express app worked with apollo server: https://www.youtube.com/watch?v=camfkdmuR8M
   2. Top level Error handling with Apollo server: https://www.youtube.com/watch?v=dr9I4xPYkdw
   3. How to access header in onError link: https://stackoverflow.com/questions/56086996/how-to-set-token-into-onerror-apolloclient
   4. Apollo Server concat links, order matters: https://stackoverflow.com/questions/51840201/apollo-you-are-calling-concat-on-a-terminating-link-which-will-have-no-effect
 
--Dec 28, 2020
+- Dec 28, 2020
 
 1.  make useMutation hook to work with higher order components, in this specific case, withFormik().https://codesandbox.io/s/awesome-ishizaka-kuhxi?file=/src/App.js:1782-1788
+
+- Dec 29, 2020
+
+  1. update cache in 2020 https://www.youtube.com/watch?v=lQ7t20gFR14
+
+  2. update cache with useMutation. https://hasura.io/learn/graphql/react/mutations-variables/3-create-mutation/
